@@ -65,6 +65,29 @@ def load_model():
     for layer in model.layers:
     layer.trainable = False
 
+    # Add new classification layers
+    # tf.keras.backend.clear_session()
+    # add new classifier layers
+    flat1 = Flatten()(model.layers[-1].output)
+    class1 = Dense(128, activation='relu')(flat1)
+    output = Dense(10, activation='softmax')(class1)
+
+    # define new model
+    model = Model(inputs=model.inputs, 
+              outputs=output)
+
+    # compile
+    lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+    initial_learning_rate=0.01,
+    decay_steps=10000,
+    decay_rate=0.9)
+    sgd = SGD(learning_rate=lr_schedule)
+
+    model.compile(optimizer=sgd,
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+
 
 def train_clf(model):
     H = model.fit(X_train, y_train, 
