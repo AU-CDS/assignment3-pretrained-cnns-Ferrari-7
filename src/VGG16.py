@@ -1,5 +1,6 @@
 
 # Importing packages
+import os
 # tf tools
 import tensorflow as tf
 # image processsing
@@ -29,28 +30,6 @@ from sklearn.metrics import classification_report
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_history(H, epochs):
-    plt.style.use("seaborn-colorblind")
-
-    plt.figure(figsize=(12,6))
-    plt.subplot(1,2,1)
-    plt.plot(np.arange(0, epochs), H.history["loss"], label="train_loss")
-    plt.plot(np.arange(0, epochs), H.history["val_loss"], label="val_loss", linestyle=":")
-    plt.title("Loss curve")
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.tight_layout()
-    plt.legend()
-
-    plt.subplot(1,2,2)
-    plt.plot(np.arange(0, epochs), H.history["accuracy"], label="train_acc")
-    plt.plot(np.arange(0, epochs), H.history["val_accuracy"], label="val_acc", linestyle=":")
-    plt.title("Accuracy curve")
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
-    plt.tight_layout()
-    plt.legend()
-    plt.show()
 
 def load_data():
     ((X_train, y_train), (X_test, y_test)) = #load data here...
@@ -76,4 +55,54 @@ def load_data():
     
     return label_names, X_train, y_train, X_test, y_test
 
+def train_clf():
+    
+    return H
+
+def plot_history(H, epochs):
+    plt.style.use("seaborn-colorblind")
+
+    plt.figure(figsize=(12,6))
+    plt.subplot(1,2,1)
+    plt.plot(np.arange(0, epochs), H.history["loss"], label="train_loss")
+    plt.plot(np.arange(0, epochs), H.history["val_loss"], label="val_loss", linestyle=":")
+    plt.title("Loss curve")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.tight_layout()
+    plt.legend()
+
+    plt.subplot(1,2,2)
+    plt.plot(np.arange(0, epochs), H.history["accuracy"], label="train_acc")
+    plt.plot(np.arange(0, epochs), H.history["val_accuracy"], label="val_acc", linestyle=":")
+    plt.title("Accuracy curve")
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+    plt.tight_layout()
+    plt.legend()
+    #plt.show()
+
+    # save the plot
+
+def clf_report(model, X_test, y_test, label_names):
+    predictions = model.predict(X_test, batch_size=128)
+    clf_report = print(classification_report(y_test.argmax(axis=1),
+                            predictions.argmax(axis=1),
+                            target_names=label_names))
+    
+    # save the classification report
+    txtfile_path = os.path.join("out", "clf_report.txt")
+    txtfile = open(txtfile_path, "w")
+    txtfile.write(clf_report)
+    txtfile.close
+
+
+def main():
+    load_data
+    train_clf
+    plot_history
+    clf_report
+
+if __name__=="__main__":
+    main()
 
