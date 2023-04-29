@@ -55,8 +55,24 @@ def load_data():
     
     return label_names, X_train, y_train, X_test, y_test
 
-def train_clf():
+def load_model():
+    # load model without classifier layers
+    model = VGG16(include_top=False, 
+              pooling='avg',
+              input_shape=(32, 32, 3))
     
+    # disable training of conv layers
+    for layer in model.layers:
+    layer.trainable = False
+
+
+def train_clf(model):
+    H = model.fit(X_train, y_train, 
+            validation_split=0.1,
+            batch_size=128,
+            epochs=10,
+            verbose=1)
+
     return H
 
 def plot_history(H, epochs):
@@ -80,9 +96,8 @@ def plot_history(H, epochs):
     plt.ylabel("Accuracy")
     plt.tight_layout()
     plt.legend()
-    #plt.show()
-
     # save the plot
+    plt.save(os.path.join("out", "history_plt.png"))
 
 def clf_report(model, X_test, y_test, label_names):
     predictions = model.predict(X_test, batch_size=128)
