@@ -1,6 +1,7 @@
 
 # Importing packages
 import os
+import pandas as pd
 # tf tools
 import tensorflow as tf
 # image processsing
@@ -42,6 +43,11 @@ def load_data():
     lb = LabelBinarizer()
     y_train = lb.fit_transform(y_train)
     y_test = lb.fit_transform(y_test)
+
+    # reading the metadata into Pandas objects
+    test_metadata = pd.read_json(os.path.join("data", "images", "metadata", "test_data.json"))
+    train_metadata = pd.read_json(os.path.join("data", "images", "metadata", "train_data.json"))
+    val_metadata = pd.read_json(os.path.join("data", "images", "metadata", "val_data.json"))
 
     # assigning labels
     label_names = ["saree", "women kurta",
