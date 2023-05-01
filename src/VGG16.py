@@ -38,18 +38,7 @@ import matplotlib.pyplot as plt
 
 
 def load_data():
-    ((X_train, y_train), (X_test, y_test)) = #load data here...
-    
-
-    X_train = X_train.astype("float") / 255.
-    X_test = X_test.astype("float") / 255.
-
-    # integers to one-hot vectors
-    lb = LabelBinarizer()
-    y_train = lb.fit_transform(y_train)
-    y_test = lb.fit_transform(y_test)
-
-    # deading the metadata into Pandas objects
+    # converting the metadata into Pandas objects
     test_metadata = pd.read_json(os.path.join("data", "images", "metadata", "test_data.json"))
     train_metadata = pd.read_json(os.path.join("data", "images", "metadata", "train_data.json"))
     val_metadata = pd.read_json(os.path.join("data", "images", "metadata", "val_data.json"))
@@ -60,7 +49,7 @@ def load_data():
                                 rotation_range=20,
                                 validation_split=0.1)
 
-    # splitting the data into train, test and validation 
+    # splitting the data into train, test and validation by using "flow_from_dataframe"
     # source: code adapted from Kaggle-user vencerlanz09 
     # (link to source: https://www.kaggle.com/code/vencerlanz09/indo-fashion-classification-using-efficientnetb0)
     train_images = datagen.flow_from_dataframe(
@@ -99,7 +88,7 @@ def load_data():
     # assigning labels by getting unique labels from the class column
     label_names = test_metadata['class_label'].unique()
     
-    return label_names, X_train, y_train, X_test, y_test
+    return label_names, train_images, val_images, test_images
 
 def load_model():
     # load model without classifier layers
@@ -137,8 +126,8 @@ def load_model():
 
 
 
-def train_clf(model):
-    H = model.fit(X_train, y_train, 
+def train_clf(model, train_images):
+    H = model.fit(train_images, 
             validation_split=0.1,
             batch_size=128,
             epochs=10,
