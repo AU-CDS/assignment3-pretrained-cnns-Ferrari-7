@@ -49,15 +49,21 @@ def load_data():
     y_train = lb.fit_transform(y_train)
     y_test = lb.fit_transform(y_test)
 
-    # reading the metadata into Pandas objects
+    # deading the metadata into Pandas objects
     test_metadata = pd.read_json(os.path.join("data", "images", "metadata", "test_data.json"))
     train_metadata = pd.read_json(os.path.join("data", "images", "metadata", "train_data.json"))
     val_metadata = pd.read_json(os.path.join("data", "images", "metadata", "val_data.json"))
 
+    # Defining data generater
+    # flip along x axis (mirror image)
+    datagen = ImageDataGenerator(horizontal_flip=True, 
+                                rotation_range=20,
+                                validation_split=0.1)
+
     # splitting the data into train, test and validation 
     # source: code adapted from Kaggle-user vencerlanz09 
     # (link to source: https://www.kaggle.com/code/vencerlanz09/indo-fashion-classification-using-efficientnetb0)
-    train_images = train_generator.flow_from_dataframe(
+    train_images = datagen.flow_from_dataframe(
         dataframe=train_metadata,
         x_col='image_path',
         y_col='class_label',
@@ -69,7 +75,7 @@ def load_data():
         seed=42,
         subset='training')
 
-    val_images = val_generator.flow_from_dataframe(
+    val_images = datagen.flow_from_dataframe(
         dataframe=val_metadata,
         x_col='image_path',
         y_col='class_label',
@@ -80,7 +86,7 @@ def load_data():
         shuffle=True,
         seed=42)
 
-    test_images = test_generator.flow_from_dataframe(
+    test_images = datagen.flow_from_dataframe(
         dataframe=test_metadata,
         x_col='image_path',
         y_col='class_label',
