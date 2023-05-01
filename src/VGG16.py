@@ -93,34 +93,37 @@ def load_data():
 def load_model():
     # load model without classifier layers
     model = VGG16(include_top=False, 
-              pooling='avg',
-              input_shape=(32, 32, 3))
-    
-    # disable training of conv layers
-    for layer in model.layers:
-    layer.trainable = False
+                pooling='avg',
+                input_shape=(32, 32, 3))
 
-    # Add new classification layers
-    # tf.keras.backend.clear_session()
+    # mark loaded layers as not trainable
+    for layer in model.layers:
+        layer.trainable = False
+        
     # add new classifier layers
     flat1 = Flatten()(model.layers[-1].output)
-    class1 = Dense(128, activation='relu')(flat1)
-    output = Dense(10, activation='softmax')(class1)
+    bn = BatchNormalization()(flat1)
+    class1 = Dense(256, 
+                activation='relu')(bn)
+    class2 = Dense(128, 
+                activation='relu')(class1)
+    output = Dense(10, 
+                activation='softmax')(class2)
 
     # define new model
     model = Model(inputs=model.inputs, 
-              outputs=output)
+                outputs=output)
 
     # compile
     lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-    initial_learning_rate=0.01,
-    decay_steps=10000,
-    decay_rate=0.9)
+        initial_learning_rate=0.01,
+        decay_steps=10000,
+        decay_rate=0.9)
     sgd = SGD(learning_rate=lr_schedule)
 
     model.compile(optimizer=sgd,
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
+                loss='categorical_crossentropy',
+                metrics=['accuracy'])
     
     return model
 
@@ -133,7 +136,7 @@ def train_clf(model, train_images):
             epochs=10,
             verbose=1)
 
-    return H
+    return H, epochs
 
 def plot_history(H, epochs):
     plt.style.use("seaborn-colorblind")
@@ -159,9 +162,9 @@ def plot_history(H, epochs):
     # save the plot
     plt.save(os.path.join("out", "history_plt.png"))
 
-def clf_report(model, X_test, y_test, label_names):
-    predictions = model.predict(X_test, batch_size=128)
-    clf_report = print(classification_report(y_test.argmax(axis=1),
+def clf_report(model, train_imaes, test_images, label_names):
+    predictions = model.predict(test_images, batch_size=128)
+    clf_report = print(classification_report(test_images.argmax(axis=1),
                             predictions.argmax(axis=1),
                             target_names=label_names))
     
@@ -173,10 +176,11 @@ def clf_report(model, X_test, y_test, label_names):
 
 
 def main():
-    load_data
-    train_clf
-    plot_history
-    clf_report
+    label_names, train_images, val_images, test_images = load_data()
+    model = load_model()
+    H, epochs = train_clf(model, train_images)
+    plot_history(H, epochs)
+    clf_report(model, label_names, test_images)
 
 if __name__=="__main__":
     main()
