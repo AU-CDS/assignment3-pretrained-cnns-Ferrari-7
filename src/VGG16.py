@@ -1,3 +1,8 @@
+'''
+Note to Ross: 
+I have unfortunately not finished the code since I'm struggling a bit with figuring out how to load the data.
+
+'''
 
 # Importing packages
 import os
@@ -50,6 +55,8 @@ def load_data():
     val_metadata = pd.read_json(os.path.join("data", "images", "metadata", "val_data.json"))
 
     # assigning labels
+    
+    label_names = test_metadata['class_label'].unique()
     label_names = ["saree", "women kurta",
                    "leggins and salwar",
                    "palazzo", "lehenga",
