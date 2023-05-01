@@ -96,17 +96,8 @@ def load_data():
         batch_size=BATCH_SIZE,
         shuffle=False)
 
-    # assigning labels
-    
+    # assigning labels by getting unique labels from the class column
     label_names = test_metadata['class_label'].unique()
-    label_names = ["saree", "women kurta",
-                   "leggins and salwar",
-                   "palazzo", "lehenga",
-                   "dupatta", "blouse",
-                   "gown", "dhoti pants",
-                   "petticoats", "women mojari",
-                   "men kurta", "nehru jacket",
-                   "sherwani", "men mojari"]
     
     return label_names, X_train, y_train, X_test, y_test
 
