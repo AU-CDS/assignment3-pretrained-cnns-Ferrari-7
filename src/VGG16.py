@@ -39,9 +39,12 @@ import matplotlib.pyplot as plt
 
 def load_data():
     # converting the metadata into Pandas objects
-    test_metadata = pd.read_json(os.path.join("data", "images", "metadata", "test_data.json"))
-    train_metadata = pd.read_json(os.path.join("data", "images", "metadata", "train_data.json"))
-    val_metadata = pd.read_json(os.path.join("data", "images", "metadata", "val_data.json"))
+    test_metadata = pd.read_json(os.path.join("..", "images", "metadata", "test_data.json"))
+    train_metadata = pd.read_json(os.path.join("..", "images", "metadata", "train_data.json"))
+    val_metadata = pd.read_json(os.path.join("..", "images", "metadata", "val_data.json"))
+
+    # !!!
+    train_metadata.sample(frac=0.05)
 
     # Defining data generater
     # flip along x axis (mirror image)
@@ -52,6 +55,8 @@ def load_data():
     # splitting the data into train, test and validation by using "flow_from_dataframe"
     # source: code adapted from Kaggle-user vencerlanz09 
     # (link to source: https://www.kaggle.com/code/vencerlanz09/indo-fashion-classification-using-efficientnetb0)
+    BATCH_SIZE = 32
+    TARGET_SIZE = (224, 224)
     train_images = datagen.flow_from_dataframe(
         dataframe=train_metadata,
         x_col='image_path',
@@ -129,9 +134,9 @@ def load_model():
 
 
 
-def train_clf(model, train_images):
+def train_clf(model, train_images, val_images):
     H = model.fit(train_images, 
-            validation_split=0.1,
+            validation_data = val_images,
             batch_size=128,
             epochs=10,
             verbose=1)
@@ -178,7 +183,7 @@ def clf_report(model, train_imaes, test_images, label_names):
 def main():
     label_names, train_images, val_images, test_images = load_data()
     model = load_model()
-    H, epochs = train_clf(model, train_images)
+    H, epochs = train_clf(model, train_images, val_images)
     plot_history(H, epochs)
     clf_report(model, label_names, test_images)
 
