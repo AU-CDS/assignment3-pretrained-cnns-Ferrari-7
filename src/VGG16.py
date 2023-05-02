@@ -168,7 +168,7 @@ def plot_history(H, epochs):
     # save the plot
     plt.save(os.path.join("out", "history_plt.png"))
 
-def clf_report(model, train_imaes, test_images, label_names):
+def clf_report(model, test_images, label_names):
     predictions = model.predict(test_images, batch_size=128)
     clf_report = print(classification_report(test_images.argmax(axis=1),
                             predictions.argmax(axis=1),
