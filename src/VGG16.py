@@ -39,6 +39,7 @@ import matplotlib.pyplot as plt
 
 def load_data():
     # converting the metadata into Pandas objects
+    # !!! NTS remember to change ".." to "data" in final version
     test_metadata = pd.read_json(os.path.join("..", "images", "metadata", "test_data.json"))
     train_metadata = pd.read_json(os.path.join("..", "images", "metadata", "train_data.json"))
     val_metadata = pd.read_json(os.path.join("..", "images", "metadata", "val_data.json"))
