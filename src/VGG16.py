@@ -1,6 +1,7 @@
 '''
 Note to Ross: 
-I have unfortunately not finished the code since I'm struggling a bit with figuring out how to load the data.
+I have unfortunately not finished the code since I'm struggling a bit with fitting the model to the generated data.
+(it gives me this error on line 140: "ValueError: Asked to retrieve element 0, but the Sequence has length 0")
 
 '''
 
