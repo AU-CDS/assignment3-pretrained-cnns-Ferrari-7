@@ -46,7 +46,12 @@ def load_data():
     val_metadata = pd.read_json(os.path.join("..", "images", "metadata", "val_data.json"), lines = True)
 
     # !!!
-    train_metadata.sample(frac=0.05)
+    train_metadata.sample(frac=0.1)
+
+    # changing the column with the image path from a relative path to an absolute path
+    test_metadata["image_path"] = "/work/" + test_metadata["image_path"]
+    train_metadata["image_path"] = "/work/" + train_metadata["image_path"]
+    val_metadata["image_path"] = "/work/" + val_metadata["image_path"]
 
     # Defining data generater
     # flip along x axis (mirror image)
@@ -61,6 +66,7 @@ def load_data():
     TARGET_SIZE = (224, 224)
     train_images = datagen.flow_from_dataframe(
         dataframe=train_metadata,
+        #directory = os.path.join("..", "images", "train"),
         x_col='image_path',
         y_col='class_label',
         target_size=TARGET_SIZE,
@@ -73,6 +79,7 @@ def load_data():
 
     val_images = datagen.flow_from_dataframe(
         dataframe=val_metadata,
+        #directory = os.path.join("..", "images", "val"),
         x_col='image_path',
         y_col='class_label',
         target_size=TARGET_SIZE,
@@ -84,6 +91,7 @@ def load_data():
 
     test_images = datagen.flow_from_dataframe(
         dataframe=test_metadata,
+        #directory = os.path.join("..", "images", "test"),
         x_col='image_path',
         y_col='class_label',
         target_size=TARGET_SIZE,
