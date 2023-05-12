@@ -46,7 +46,7 @@ def load_data():
     val_metadata = pd.read_json(os.path.join("..", "images", "metadata", "val_data.json"), lines = True)
 
     # !!!
-    train_metadata.sample(frac=0.1)
+    train_metadata = train_metadata.sample(frac=0.1)
 
     # changing the column with the image path from a relative path to an absolute path
     test_metadata["image_path"] = "/work/" + test_metadata["image_path"]
