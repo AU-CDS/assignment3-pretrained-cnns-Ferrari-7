@@ -122,8 +122,8 @@ def load_model():
                 activation='relu')(bn)
     class2 = Dense(128, 
                 activation='relu')(class1)
-    output = Dense(10, 
-                activation='softmax')(class2)
+    output = Dense(15, 
+                activation='softmax')(class2) # NTS: changed from 10 to 15 (number of classes)
 
     # define new model
     model = Model(inputs=model.inputs, 
@@ -141,7 +141,6 @@ def load_model():
                 metrics=['accuracy'])
     
     return model
-
 
 
 def train_clf(model, train_images, val_images):
