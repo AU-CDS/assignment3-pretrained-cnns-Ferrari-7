@@ -150,7 +150,7 @@ def train_clf(model, train_images, val_images):
             epochs=10,
             verbose=1)
 
-    return H, epochs
+    return H
 
 def plot_history(H, epochs):
     plt.style.use("seaborn-colorblind")
@@ -193,7 +193,7 @@ def main():
     label_names, train_images, val_images, test_images = load_data()
     model = load_model()
     H, epochs = train_clf(model, train_images, val_images)
-    plot_history(H, epochs)
+    plot_history(H, 10)
     clf_report(model, label_names, test_images)
 
 if __name__=="__main__":
