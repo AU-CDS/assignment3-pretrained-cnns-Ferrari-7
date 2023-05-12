@@ -116,8 +116,7 @@ def load_model():
         
     # add new classifier layers
     flat1 = Flatten()(model.layers[-1].output)
-    bn = BatchNormalization()(flat1)
-    # NTS : removed one layer
+    bn = BatchNormalization()(flat1) # NTS : removed one layer
     class1 = Dense(128, 
                 activation='relu')(bn)
     output = Dense(15, 
