@@ -117,12 +117,11 @@ def load_model():
     # add new classifier layers
     flat1 = Flatten()(model.layers[-1].output)
     bn = BatchNormalization()(flat1)
-    class1 = Dense(256, 
+    # NTS : removed one layer
+    class1 = Dense(128, 
                 activation='relu')(bn)
-    class2 = Dense(128, 
-                activation='relu')(class1)
     output = Dense(15, 
-                activation='softmax')(class2) # NTS: changed from 10 to 15 (number of classes)
+                activation='softmax')(class1) # NTS: changed from 10 to 15 (number of classes)
 
     # define new model
     model = Model(inputs=model.inputs, 
@@ -151,6 +150,7 @@ def train_clf(model, train_images, val_images):
 
     return H
 
+# Using plot_history() function to see how model performs during training.
 def plot_history(H, epochs):
     plt.style.use("seaborn-colorblind")
 
