@@ -13,11 +13,27 @@ The code in this repository does the following:
 ## User instructions
 
 1. The user needs to download the dataset and save it into the folder called "**data**" in this repository. The dataset can be downloaded from Kaggle [here](https://www.kaggle.com/datasets/validmodel/indo-fashion-dataset).
-2. Run the ```run.sh``` file from command line like so:
+
+2. Run the ```setup.sh```file to install necessary packages to run the code in this repository:
+
+```bash setup.sh```
+
+3. Run the ```run.sh``` file from command line to run the code:
 
 ```bash run.sh```
 
 This installs the necessary packages into a virtual enviroment and runs the code which trains the classifier, saves the training and validation history plots as well as the classification report.
+
+## Repository structure
+
+| item | description | 
+| --- | --- |
+| data | folder in which the user may save the dataset |
+| out | folder where the history plots and classification report will be saved to |
+| src | folder which contains the .py script | 
+| requirements.txt | text file listing the necessary packages to run the code | 
+| run.sh | shell file which runs the code in src |
+| setup.sh | shell file which installs the necessary packages | 
 
 .................................................
 

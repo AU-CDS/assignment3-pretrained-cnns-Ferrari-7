@@ -1,6 +1,6 @@
 '''
 Note to Ross: 
-I have unfortunately not finished the code yet, but I'm working on it.
+I have unfortunately not finished testing the code yet, but I'm working on it.
 
 '''
 
