@@ -102,7 +102,7 @@ def load_data():
     # assigning labels by getting unique labels from the class column
     label_names = test_metadata['class_label'].unique()
     
-    return label_names, train_images, val_images, test_images
+    return label_names, train_images, val_images, test_images, test_metadata
 
 def load_model():
     # load model without classifier layers
@@ -174,12 +174,12 @@ def plot_history(H, epochs):
     # save the plot
     plt.savefig(os.path.join("out", "history_plt.png"))
 
-def clf_report(model, test_images, label_names):
+def clf_report(model, test_images, test_metadata, label_names):
     predictions = model.predict(test_images, batch_size=128)
-    clf_report = print(classification_report(test_images.argmax(axis=1),
+    y_test = list(test_metadata.class_label) # (new)
+    clf_report = print(classification_report(y_test.argmax(axis=1),
                             predictions.argmax(axis=1),
                             target_names=label_names))
-    
     # save the classification report
     txtfile_path = os.path.join("out", "clf_report.txt")
     txtfile = open(txtfile_path, "w")
@@ -188,11 +188,11 @@ def clf_report(model, test_images, label_names):
 
 
 def main():
-    label_names, train_images, val_images, test_images = load_data()
+    label_names, train_images, val_images, test_images, test_metadata = load_data()
     model = load_model()
     H, model = train_clf(model, train_images, val_images)
     plot_history(H, 2) # CHANGED FROM 10 FOR TESTING
-    clf_report(model, label_names, test_images)
+    clf_report(model, test_images, test_metadata, label_names)
 
 if __name__=="__main__":
     main()
