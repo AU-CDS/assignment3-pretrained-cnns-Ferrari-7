@@ -144,7 +144,7 @@ def train_clf(model, train_images, val_images):
     H = model.fit(train_images, 
             validation_data = val_images,
             batch_size=128,
-            epochs=1,
+            epochs=2, # CHANGED FROM 10 FOR TESTING
             verbose=1)
 
     return H, model
@@ -191,7 +191,7 @@ def main():
     label_names, train_images, val_images, test_images = load_data()
     model = load_model()
     H, model = train_clf(model, train_images, val_images)
-    plot_history(H, 1)
+    plot_history(H, 2) # CHANGED FROM 10 FOR TESTING
     clf_report(model, label_names, test_images)
 
 if __name__=="__main__":
