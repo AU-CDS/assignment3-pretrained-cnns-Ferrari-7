@@ -144,10 +144,10 @@ def train_clf(model, train_images, val_images):
     H = model.fit(train_images, 
             validation_data = val_images,
             batch_size=128,
-            epochs=10,
+            epochs=1,
             verbose=1)
 
-    return H
+    return H, model
 
 # Using plot_history() function to see how model performs during training.
 def plot_history(H, epochs):
@@ -172,7 +172,7 @@ def plot_history(H, epochs):
     plt.tight_layout()
     plt.legend()
     # save the plot
-    plt.save(os.path.join("out", "history_plt.png"))
+    plt.savefig(os.path.join("out", "history_plt.png"))
 
 def clf_report(model, test_images, label_names):
     predictions = model.predict(test_images, batch_size=128)
@@ -190,8 +190,8 @@ def clf_report(model, test_images, label_names):
 def main():
     label_names, train_images, val_images, test_images = load_data()
     model = load_model()
-    H = train_clf(model, train_images, val_images)
-    plot_history(H, 10)
+    H, model = train_clf(model, train_images, val_images)
+    plot_history(H, 1)
     clf_report(model, label_names, test_images)
 
 if __name__=="__main__":
