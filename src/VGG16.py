@@ -177,8 +177,8 @@ def plot_history(H, epochs):
 def clf_report(model, test_images, test_metadata, label_names):
     predictions = model.predict(test_images, batch_size=128)
     y_test = list(test_metadata.class_label) # (new)
-    clf_report = print(classification_report(y_test.argmax(axis=1),
-                            predictions.argmax(axis=1),
+    clf_report = print(classification_report(y_test, # removed: .argmax(axis=1)
+                            predictions.argmax(axis=1), 
                             target_names=label_names))
     # save the classification report
     txtfile_path = os.path.join("out", "clf_report.txt")
