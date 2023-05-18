@@ -27,8 +27,9 @@ The dataset can be downloaded from Kaggle [here](https://www.kaggle.com/datasets
 
 This installs the necessary packages into a virtual enviroment and runs the code which trains the classifier, saves the training and validation history plots as well as the classification report.
 
+## Repository structure
 
-| Item | Description | 
+| Item | Description |
 | --- | --- |
 | data | folder in which the user may save the dataset |
 | out | folder where the history plots and classification report will be saved to |
