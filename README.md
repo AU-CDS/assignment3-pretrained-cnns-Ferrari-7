@@ -30,10 +30,10 @@ This installs the necessary packages into a virtual enviroment and runs the code
 | --- | --- |
 | data | folder in which the user may save the dataset |
 | out | folder where the history plots and classification report will be saved to |
-| src | folder which contains the .py script | 
-| requirements.txt | text file listing the necessary packages to run the code | 
+| src | folder which contains the .py script |
+| requirements.txt | text file listing the necessary packages to run the code |
 | run.sh | shell file which runs the code in src |
-| setup.sh | shell file which installs the necessary packages | 
+| setup.sh | shell file which installs the necessary packages |
 
 
 .................................................
