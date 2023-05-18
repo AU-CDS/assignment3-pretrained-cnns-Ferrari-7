@@ -38,6 +38,10 @@ This installs the necessary packages into a virtual enviroment and runs the code
 | run.sh | shell file which runs the code in src |
 | setup.sh | shell file which installs the necessary packages |
 
+## Discussion
+
+The goal of this repository is to train a pretrained classifier on a unseen dataset which is a concept known as *transfer learning*. Pretrained classifiers like VGG16 are effective because they have been trained on very large amounts of data which requires a vast amount of ressources. A pretrained classifier therefore makes classification tasks more efficient and available to the average user.
+
 
 .................................................
 

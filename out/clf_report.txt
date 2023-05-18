@@ -1,0 +1,21 @@
+                      precision    recall  f1-score   support
+
+             lehenga       0.00      0.00      0.00         6
+       nehru_jackets       0.00      0.00      0.00         5
+leggings_and_salwars       0.00      0.00      0.00         5
+         dhoti_pants       0.00      0.00      0.00         4
+         women_kurta       0.00      0.00      0.00         4
+          petticoats       0.00      0.00      0.00        12
+            palazzos       0.00      0.00      0.00         7
+               saree       0.00      0.00      0.00         4
+               gowns       0.00      0.00      0.00         3
+              blouse       0.00      0.00      0.00         4
+           kurta_men       0.13      0.33      0.19         6
+            dupattas       0.00      0.00      0.00         2
+         mojaris_men       0.00      0.00      0.00         4
+           sherwanis       0.00      0.00      0.00         2
+       mojaris_women       0.00      0.00      0.00         7
+
+            accuracy                           0.03        75
+           macro avg       0.01      0.02      0.01        75
+        weighted avg       0.01      0.03      0.02        75

@@ -39,13 +39,14 @@ import matplotlib.pyplot as plt
 
 def load_data():
     # converting the metadata into Pandas objects
-    # !!! NTS remember to change ".." to "data" in final version
     test_metadata = pd.read_json(os.path.join("..", "images", "metadata", "test_data.json"), lines = True)
     train_metadata = pd.read_json(os.path.join("..", "images", "metadata", "train_data.json"), lines = True)
     val_metadata = pd.read_json(os.path.join("..", "images", "metadata", "val_data.json"), lines = True)
 
-    # !!!
-    train_metadata = train_metadata.sample(frac=0.1)
+    # !!! TAKING A SMALL FRACTION FOR TESTING PURPOSES
+    train_metadata = train_metadata.sample(frac=0.01)
+    test_metadata = test_metadata.sample(frac=0.01)
+    val_metadata = val_metadata.sample(frac=0.01)
 
     # changing the column with the image path from a relative path to an absolute path
     test_metadata["image_path"] = "/work/" + test_metadata["image_path"]
@@ -174,16 +175,21 @@ def plot_history(H, epochs):
     # save the plot
     plt.savefig(os.path.join("out", "history_plt.png"))
 
+
 def clf_report(model, test_images, test_metadata, label_names):
     predictions = model.predict(test_images, batch_size=128)
+    predictions = np.argmax(predictions, axis=1)
+    # generating predictions
+    predictions = [label_names[k] for k in predictions] # NTS: NEW
     y_test = list(test_metadata.class_label) # (new)
-    clf_report = print(classification_report(y_test, # removed: .argmax(axis=1)
-                            predictions.argmax(axis=1), 
-                            target_names=label_names))
+    clf_report = classification_report(y_test, # removed: .argmax(axis=1)
+                            predictions, # removed: .argmax(axis=1)
+                            target_names=label_names)
+    # clf_report = print(clf_report)
     # save the classification report
     txtfile_path = os.path.join("out", "clf_report.txt")
     txtfile = open(txtfile_path, "w")
-    txtfile.write(clf_report)
+    txtfile.write(str(clf_report))
     txtfile.close
 
 
