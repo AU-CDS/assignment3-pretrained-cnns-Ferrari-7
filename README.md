@@ -2,7 +2,7 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10866179&assignment_repo_type=AssignmentRepo)
 # Using pretrained CNNs for image classification
 
-This repo contains code which trains a classifier on a dataset of *Indo fashion* taken from this [Kaggle dataset](https://www.kaggle.com/datasets/validmodel/indo-fashion-dataset). The dataset has a accompanying paper on *arXiv.org* which can be read [here](https://arxiv.org/abs/2104.02830).
+This repo contains code which trains a classifier on a dataset on images of *Indo fashion* taken from this [Kaggle dataset](https://www.kaggle.com/datasets/validmodel/indo-fashion-dataset). The dataset has a accompanying paper on *arXiv.org* which can be read [here](https://arxiv.org/abs/2104.02830).
 
 The code in this repository does the following:
 
@@ -12,9 +12,12 @@ The code in this repository does the following:
 
 ## User instructions
 
-1. The user needs to download the dataset and save it into the folder called "**data**" in this repository. The dataset can be downloaded from Kaggle [here](https://www.kaggle.com/datasets/validmodel/indo-fashion-dataset).
+1. The user needs to download the dataset and have the folder open on the same level as this repository.
+The dataset can be downloaded from Kaggle [here](https://www.kaggle.com/datasets/validmodel/indo-fashion-dataset).
 
-2. Run the ```setup.sh```file to install necessary packages to run the code in this repository:
+**NB** The code includes absolute paths which means that the code may not be able to run if the the paths to the images do not match up with the ones defined in the code. The user may therefore change this section of the code if necessary.  
+
+2. Run the ```setup.sh``` file to install necessary packages to run the code in this repository:
 
 ```bash setup.sh```
 
@@ -26,7 +29,7 @@ This installs the necessary packages into a virtual enviroment and runs the code
 
 ## Repository structure
 
-| item | description | 
+| Item | Description | 
 | --- | --- |
 | data | folder in which the user may save the dataset |
 | out | folder where the history plots and classification report will be saved to |
