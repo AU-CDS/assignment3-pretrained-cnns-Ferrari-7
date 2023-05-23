@@ -43,4 +43,26 @@ This installs the necessary packages into a virtual enviroment and runs the code
 The goal of this repository is to train a pretrained classifier on a unseen dataset which is a concept known as *transfer learning*. Pretrained classifiers like VGG16 are effective because they have been trained on very large amounts of data which requires a vast amount of ressources. A pretrained classifier therefore makes classification tasks more efficient and available to the average user.
 
 First I attempted to train the classifier with 10 epochs. But after four hours of training on a 32 CPU machine, the code had only run through approximately 1 1/3 epoch. I had expected that the process would go significantly faster after the first epoch but that did not seem to be the case. I assessed that training 10 epochs would not be feasible and therefore decided to cut down the amount of data and epochs. 
-I used pandas to get an equally distributed sampling from each class, thereby reducing the size of the dataset by 50%. Additionally I reduced the amount of epochs from 10 to 3.
+I used pandas to get an equally distributed sampling from each class, thereby reducing the size of the dataset by 50%. Additionally I reduced the amount of epochs from 10 to 3. This then took about 3 hours to train on a 32 CPU machine.
+
+                      precision    recall  f1-score   support
+
+    blouse                  0.96      0.09      0.17       250
+    dhoti_pants             0.83      0.54      0.65       250
+    dupattas                0.65      0.59      0.62       250
+    gowns                   0.67      0.45      0.54       250
+    kurta_men               0.64      0.90      0.75       250
+    leggings_and_salwars    0.61      0.78      0.69       250
+    lehenga                 0.86      0.88      0.87       250
+    mojaris_men             0.83      0.86      0.85       250
+    mojaris_women           0.86      0.82      0.84       250
+    nehru_jackets           0.78      0.84      0.81       250
+    palazzos                0.88      0.72      0.79       250
+    petticoats              0.81      0.79      0.80       250
+    saree                   0.62      0.93      0.75       250
+    sherwanis               0.88      0.66      0.76       250
+    women_kurta             0.45      0.84      0.59       250
+
+    accuracy                          0.71      3750
+    macro avg               0.76      0.71      0.70      3750
+    weighted avg            0.76      0.71      0.70      3750
