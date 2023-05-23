@@ -66,3 +66,6 @@ I used pandas to get an equally distributed sampling from each class, thereby re
     accuracy                                    0.71      3750
     macro avg               0.76      0.71      0.70      3750
     weighted avg            0.76      0.71      0.70      3750
+
+
+![](out/history_plt.png)
