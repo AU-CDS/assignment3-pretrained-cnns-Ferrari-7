@@ -63,6 +63,6 @@ I used pandas to get an equally distributed sampling from each class, thereby re
     sherwanis               0.88      0.66      0.76       250
     women_kurta             0.45      0.84      0.59       250
 
-    accuracy                          0.71      3750
+    accuracy                                    0.71      3750
     macro avg               0.76      0.71      0.70      3750
     weighted avg            0.76      0.71      0.70      3750
