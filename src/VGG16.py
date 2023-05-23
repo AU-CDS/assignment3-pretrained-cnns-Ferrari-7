@@ -17,8 +17,6 @@ from tensorflow.keras.preprocessing.image import (load_img,
 from tensorflow.keras.applications.vgg16 import (preprocess_input,
                                                  decode_predictions,
                                                  VGG16)
-# cifar10 data - 32x32
-from tensorflow.keras.datasets import cifar10
 # layers
 from tensorflow.keras.layers import (Flatten, 
                                      Dense, 
@@ -44,9 +42,15 @@ def load_data():
     val_metadata = pd.read_json(os.path.join("..", "images", "metadata", "val_data.json"), lines = True)
 
     # !!! TAKING A SMALL FRACTION FOR TESTING PURPOSES
-    train_metadata = train_metadata.sample(frac=0.01)
-    test_metadata = test_metadata.sample(frac=0.01)
-    val_metadata = val_metadata.sample(frac=0.01)
+    #train_metadata = train_metadata.sample(frac=0.01)
+    #test_metadata = test_metadata.sample(frac=0.01)
+    #val_metadata = val_metadata.sample(frac=0.01)
+
+    # TAKING AF FRACTION OF DATA FOR EACH LABEL IN EACH DATA FRAME
+    test_metadata = test_metadata.groupby("class_label").sample(frac=0.5)
+    train_metadata = train_metadata.groupby("class_label").sample(frac=0.5)
+    val_metadata = val_metadata.groupby("class_label").sample(frac=0.5)
+
 
     # changing the column with the image path from a relative path to an absolute path
     test_metadata["image_path"] = "/work/" + test_metadata["image_path"]
@@ -145,7 +149,7 @@ def train_clf(model, train_images, val_images):
     H = model.fit(train_images, 
             validation_data = val_images,
             batch_size=128,
-            epochs=2, # CHANGED FROM 10 FOR TESTING
+            epochs=3, # CHANGED FROM 10 FOR TESTING
             verbose=1)
 
     return H, model
@@ -197,7 +201,7 @@ def main():
     label_names, train_images, val_images, test_images, test_metadata = load_data()
     model = load_model()
     H, model = train_clf(model, train_images, val_images)
-    plot_history(H, 2) # CHANGED FROM 10 FOR TESTING
+    plot_history(H, 3) # CHANGED FROM 10 FOR TESTING
     clf_report(model, test_images, test_metadata, label_names)
 
 if __name__=="__main__":
