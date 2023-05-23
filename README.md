@@ -69,3 +69,5 @@ I used pandas to get an equally distributed sampling from each class, thereby re
 
 
 ![](out/history_plt.png)
+
+The loss curve of a well performing model would start off high but eventually flatten out where the training and the validation curve would ideally move closer together. The loss curves above does not really flatten out and the two curves does not grow closer. The model does not seem overfitted because the training loss curve gets continually lower and not the opposite.  
