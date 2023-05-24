@@ -67,7 +67,9 @@ I used pandas to get an equally distributed sampling from each class, thereby re
     macro avg               0.76      0.71      0.70      3750
     weighted avg            0.76      0.71      0.70      3750
 
+Overall, the f1-scores does seem balanced with an avg f1-score of 0.71. There is an exception with the class "blouse", however. Here the precision is very high which means that the vast majority of blouses that where predicted as blouses were actually blouses. However, the recall score is extremely low which means that there is a huge procent of blouses that was not indentified as blouses but as something else. With the women's kurta the problem is the opposite (although not as severe). Here the low precision score means that there were many examples where something was labeled as a women's kurta but it actually wasn't. The higher recall means that the majority of women's kurtas was labeled as such. Since the support (number of class occurences) is equal for every category, this is not due an inbalance in the data, but more likely a need to train on a larger fraction of the dataset for longer epochs.
+
 
 ![](out/history_plt.png)
 
-The loss curve of a well performing model would start off high but eventually flatten out where the training and the validation curve would ideally move closer together. The loss curves above does not really flatten out and the two curves does not grow closer. The model does not seem overfitted because the training loss curve gets continually lower and not the opposite.  
+The loss curve of a well performing model would start off high but eventually flatten out where the training and the validation curve would ideally move closer together. The loss curves above does not really flatten out and the two curves do not grow closer. The model does not seem overfitted because the training loss curve gets continually lower and not the opposite. Neither the loss- or the accuracy curve seem to fully reach a plateau which could mean that the model could benefit from training for more epochs. 

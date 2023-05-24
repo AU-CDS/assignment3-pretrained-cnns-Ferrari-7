@@ -53,6 +53,7 @@ def load_data():
 
 
     # changing the column with the image path from a relative path to an absolute path
+    # (in order for TensorFlow's flow_from_dataframe function to work)
     test_metadata["image_path"] = "/work/" + test_metadata["image_path"]
     train_metadata["image_path"] = "/work/" + train_metadata["image_path"]
     val_metadata["image_path"] = "/work/" + val_metadata["image_path"]
@@ -64,26 +65,24 @@ def load_data():
                                 validation_split=0.1)
 
     # splitting the data into train, test and validation by using "flow_from_dataframe"
-    # source: code adapted from Kaggle-user vencerlanz09 
-    # (link to source: https://www.kaggle.com/code/vencerlanz09/indo-fashion-classification-using-efficientnetb0)
+    # (method of loading data adapted from Kaggle-user vencerlanz09:
+    # link: https://www.kaggle.com/code/vencerlanz09/indo-fashion-classification-using-efficientnetb0)
     BATCH_SIZE = 32
     TARGET_SIZE = (224, 224)
     train_images = datagen.flow_from_dataframe(
         dataframe=train_metadata,
-        #directory = os.path.join("..", "images", "train"),
-        x_col='image_path',
-        y_col='class_label',
+        x_col='image_path', # using the image path column in data frame to get training data. 
+        y_col='class_label', # using class label column in data frame to get labels
         target_size=TARGET_SIZE,
         color_mode='rgb',
         class_mode='categorical',
         batch_size=BATCH_SIZE,
         shuffle=True,
-        seed=42,
+        seed=42, # random seed for shuffling and transformations
         subset='training')
 
     val_images = datagen.flow_from_dataframe(
         dataframe=val_metadata,
-        #directory = os.path.join("..", "images", "val"),
         x_col='image_path',
         y_col='class_label',
         target_size=TARGET_SIZE,
@@ -95,7 +94,6 @@ def load_data():
 
     test_images = datagen.flow_from_dataframe(
         dataframe=test_metadata,
-        #directory = os.path.join("..", "images", "test"),
         x_col='image_path',
         y_col='class_label',
         target_size=TARGET_SIZE,
@@ -121,11 +119,11 @@ def load_model():
         
     # add new classifier layers
     flat1 = Flatten()(model.layers[-1].output)
-    bn = BatchNormalization()(flat1) # NTS : removed one layer
+    bn = BatchNormalization()(flat1)
     class1 = Dense(128, 
-                activation='relu')(bn)
+                activation='relu')(bn) # first layer
     output = Dense(15, 
-                activation='softmax')(class1) # NTS: changed from 10 to 15 (number of classes)
+                activation='softmax')(class1) # second layer
 
     # define new model
     model = Model(inputs=model.inputs, 
@@ -149,7 +147,7 @@ def train_clf(model, train_images, val_images):
     H = model.fit(train_images, 
             validation_data = val_images,
             batch_size=128,
-            epochs=3, # CHANGED FROM 10 FOR TESTING
+            epochs=3,
             verbose=1)
 
     return H, model
@@ -201,7 +199,7 @@ def main():
     label_names, train_images, val_images, test_images, test_metadata = load_data()
     model = load_model()
     H, model = train_clf(model, train_images, val_images)
-    plot_history(H, 3) # CHANGED FROM 10 FOR TESTING
+    plot_history(H, 3)
     clf_report(model, test_images, test_metadata, label_names)
 
 if __name__=="__main__":
